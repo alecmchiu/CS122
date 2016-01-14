@@ -1,0 +1,11 @@
+#OS X Files
+.DS_Store
+
+#text files
+*.txt
+
+#pyc files
+*.pyc
+
+#zip files
+*.zip
