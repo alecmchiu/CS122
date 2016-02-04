@@ -31,6 +31,10 @@ def generate_single_reads(filename = 'reads_hw1_W_2_chr_1.txt'):
 		single_reads.extend(single)
 	return single_reads
 
+def generate_pair_reads(filename):
+	paired = reads(filename)
+	return paired
+
 def HammingDistance(read1,read2):
 	"""Calculate Hamming Distance between two n-length strings (mismatches)"""
 	assert len(read1) == len(read2), "HammingDistance Error: Not Same Length: {} vs. {}".format(len(read1),len(read2))
