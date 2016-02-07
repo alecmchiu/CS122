@@ -5,12 +5,12 @@ from time import clock
 #solely for clocking purposes
 start = clock()
 
-reference = read_genome('ref_hw1_W_2_chr_1.txt')
+reference = read_genome('ref_hw2undergrad_E_2_chr_1.txt')
 
 ref_index = index_genome(reference,50,4)
 serialize(ref_index)
 
-single_reads = generate_single_reads('reads_hw1_W_2_chr_1.txt')
+single_reads = generate_single_reads('reads_hw2undergrad_E_2_chr_1.txt')
 
 #account for reverse order reads from pair ending
 for each in single_reads[:]:
@@ -21,7 +21,8 @@ mismatches = 4
 SNP_candidates = {} #stores tuple (Reference,Variant,Position)
 
 for read in single_reads:
-	kmers = kmer_read(read, 10) #split read into k-mer
+	kmers = [read[:10]]
+	#kmers = kmer_read(read, 10) #split read into k-mer
 	for each in kmers:
 		if each in ref_index.keys(): #if k-mer found in reference index
 			positions = ref_index[each] #positions equal to reference index

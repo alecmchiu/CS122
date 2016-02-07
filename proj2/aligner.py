@@ -4,7 +4,6 @@ from reads import *
 from time import clock
 import concurrent.futures
 from multiprocessing import Manager
-from multiprocessing import Value
 import logging as logger
 
 #speed ups = larger key length
@@ -18,33 +17,33 @@ logger.basicConfig(level=logger.WARNING,format='%(asctime)s %(message)s', datefm
 
 start = clock()
 
-reference = read_genome('ref_hw1_W_2_chr_1.txt')
+reference = read_genome('ref_hw2undergrad_E_2_chr_1.txt')
 
 ref_index = index_genome(reference,50,4)
 #serialize(ref_index)
 #ref_index = deserialize('genome_index.txt')
 
-# single_reads = generate_single_reads('reads_hw1_W_2_chr_1.txt')
+single_reads = generate_single_reads('reads_hw2undergrad_E_2_chr_1.txt')
 
-# for each in single_reads[:]:
-# 	single_reads.append(each[::-1])
+for each in single_reads[:]:
+	single_reads.append(each[::-1])
 
 #account for reverse order reads from pair ending
 
-single_reads = []
+# single_reads = []
 
-pairs = generate_pair_reads('reads_hw1_W_2_chr_1.txt')
+# pairs = generate_pair_reads('reads_hw1_W_2_chr_1.txt')
 
-logger.warn("Read pairs")
-for each in pairs:
-	split = each.split(',')
-	for i in range(len(split)):
-		if (split[0] in ref_index):
-			single_reads.append(split[0])
-			single_reads.append(split[1][::-1])
-		else:
-			single_reads.append(split[1])
-			single_reads.append(split[0][::-1])
+# logger.warn("Read pairs")
+# for each in pairs:
+# 	split = each.split(',')
+# 	for i in range(len(split)):
+# 		if (split[0] in ref_index):
+# 			single_reads.append(split[0])
+# 			single_reads.append(split[1][::-1])
+# 		else:
+# 			single_reads.append(split[1])
+# 			single_reads.append(split[0][::-1])
 
 mismatches = 4
 
@@ -53,7 +52,8 @@ manager = Manager()
 SNP_candidates = manager.dict() #stores tuple (Reference,Variant,Position)
 
 def align(read):
-	kmers = kmer_read(read, 10) #split read into k-mer
+	kmers = [read[:10]]
+	#kmers = kmer_read(read, 10) #split read into k-mer
 	for each in kmers:
 		#if(each in ref_index.keys()):
 		if (ref_index.has_key(each)): #if k-mer found in reference index
@@ -99,7 +99,7 @@ list_of_SNPS = []
 
 logger.warn("Filtering:")
 for key in SNP_candidates.keys():
-	if (SNP_candidates[key] <= 27):
+	if (SNP_candidates[key] <= 10):
 		del SNP_candidates[key] #remove SNP if not >= 90%
 	else:
 		s = "{},{},{}".format(key[0],key[1],key[2])
