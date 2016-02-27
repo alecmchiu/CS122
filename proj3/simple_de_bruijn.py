@@ -19,15 +19,15 @@ def read_reads(read_fn):
             # only contains the name of the chromosome the reads
             # came from.
         line = line.strip()
-        #read = line.split(',')[0]  # Only take the first read.
-        possible = line.split(',')
-        possible1 = [possible[0],possible[0][::-1]]
-        possible2 = [possible[1],possible[1][::-1]]
-        read = choice(possible1)
-        read2 = choice(possible2)
+        read = line.split(',')  # Only take the first read.
+        #possible = line.split(',')
+        #possible1 = [possible[0],possible[0][::-1]]
+        #possible2 = [possible[1],possible[1][::-1]]
+        #read = choice(possible1)
+        #read2 = choice(possible2)
         # Clearly, there is room for improvement here.
-        all_reads.append(read)
-        all_reads.append(read2)
+        all_reads.append(read[0])
+        all_reads.append(read[1])
     return all_reads
 
 
@@ -51,7 +51,7 @@ def simple_de_bruijn(sequence_reads, k):
             de_bruijn_counter[pvs_kmer].update([next_kmer])
 
     # This line removes the nodes from the DeBruijn Graph that we have not seen enough.
-    de_bruijn_graph = {key: {val for val in de_bruijn_counter[key] if de_bruijn_counter[key][val] > 1}
+    de_bruijn_graph = {key: {val for val in de_bruijn_counter[key] if de_bruijn_counter[key][val] > 2}
                        for key in de_bruijn_counter}
 
     # This line removes the empty nodes from the DeBruijn graph

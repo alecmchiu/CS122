@@ -31,7 +31,39 @@ def overlap(x, y, k):
         idx = hit + k - 1
     return -1
 
+def CyclicChromosomes(reads):
+    #reads is a list of reads
+    cyclic_string = ""
+    read = reads.pop()
+    while reads:
+        suffix = read[1:len(read)]
+        for pre in reads:
+            prefix = pre[:len(pre)-1]
+            if suffix == prefix:
+                cyclic_string+=suffix[-1]
+                break
+        read = pre
+        reads.remove(pre)
+    cyclic_string+=pre[-1]
+    return cyclic_string
+
+def CyclicChromosomes2(reads):
+	s = len(reads)
+	cyclic_string = reads.pop()
+	single = len(cyclic_string)
+	while len(reads) != 0:
+		suffix = cyclic_string[len(cyclic_string)-single+1:]
+		for each in reads:
+			prefix = each[:-1]
+			if suffix == prefix:
+				cyclic_string += each[-1]
+				break
+		reads.remove(each)
+	return cyclic_string[:s]
+
 #ls = ['ATTAC','TACAG','GATTA','ACAGA','CAGAT','TTACA','AGATT']
+#print CyclicChromosomes2(ls)
+
 ls = []
 input = open('rosalind_pcov.txt','r')
 for line in input:
@@ -40,5 +72,5 @@ input.close()
 s = len(ls)
 
 output = open('cyclicchromosome.txt','w')
-output.write(greedy_scs(ls,1)[:s])
+output.write(CyclicChromosomes2(ls))
 output.close()
