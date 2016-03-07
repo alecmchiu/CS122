@@ -8,8 +8,6 @@ from random import choice
 
 logger.basicConfig(level=logger.WARNING,format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
-file_sets = ['practice_W_3_chr_1','practice_E_1_chr_1','hw2undergrad_E_2_chr_1','hw3all_A_3_chr_1']
-
 def read_reads(read_fn):
     f = open(read_fn, 'r')
     first_line = True
@@ -84,7 +82,7 @@ def de_bruijn_reassemble(de_bruijn_graph, in_degree, out_degree):
     #counter = 0
     while True:
         n_values = sum([len(de_bruijn_graph[k]) for k in de_bruijn_graph])
-        #print n_values
+        print n_values
         if n_values == 0:
             break
         #good_starts = [k for k in de_bruijn_graph if in_degree[k] == 0]
@@ -112,16 +110,14 @@ def de_bruijn_reassemble(de_bruijn_graph, in_degree, out_degree):
 
 
 if __name__ == "__main__":
-    logger.warn('START:')
-    chr_name = file_sets[1]
+    chr_name = 'hw3all_A_3_chr_1'
     input_folder = './{}'.format(chr_name)
     reads_fn = join(input_folder, 'reads_{}.txt'.format(chr_name))
     reads = read_reads(reads_fn)
-    logger.warn('DEBRUIJN:')
     db_graph, in_degs, out_degs = simple_de_bruijn(reads, 35)
     # for k in db_graph.keys()[:40]:
     #     print k, db_graph[k]
-    logger.warn('ASSEMBLE:')
+
     output = de_bruijn_reassemble(db_graph,in_degs,out_degs)
     output_fn_end = 'assembled_{}.txt'.format(chr_name)
     output_fn = join(input_folder, output_fn_end)
@@ -132,4 +128,3 @@ if __name__ == "__main__":
     zip_fn = join(input_folder, 'assembled_{}.zip'.format(chr_name))
     with zipfile.ZipFile(zip_fn,'w') as myzip:
         myzip.write(output_fn)
-    logger.warn('END:')
