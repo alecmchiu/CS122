@@ -13,12 +13,14 @@ key_length = 50
 
 fragments = 50/key_length
 
+read_length = 50
+
 genome_index = index_genome(genome, read_length, fragments-1)
 
 test = genome_index.keys()[0]
 
 paired_reads = reads('reads_' + filename + '.txt')
-
+'''
 for pair in paired_reads:
 	split = pair.split(',')
 	kmers1 = kmer_read(split[0],key_length)
@@ -52,7 +54,7 @@ for pair in paired_reads:
 		else:
 			if (len(genome_index[each]) > fragments):
 				total.remove(each)
-
+'''
 
 candidates = []
 
@@ -62,6 +64,10 @@ for pair in paired_reads:
 		continue
 	if (split[0][::-1] in genome_index and split[1] in genome_index):
 		continue
+	if (split[0] in genome_index and split[1] in genome_index):
+		print "yes"
+	if (split[0][::-1] in genome_index and split[1][::-1] in genome_index):
+		print "yes"
 	if (split[0] in genome_index):
 		if (len(genome_index[split[0]]) == 1):
 			candidates.append(split[0])
@@ -84,8 +90,8 @@ for each in candidates_set:
 
 sorted_pos = sorted(reversed_dict.keys())
 
-for each in sorted_pos:
-	print each, reversed_dict[each]
+#for each in sorted_pos:
+#	print each, reversed_dict[each]
 
 for i in range(len(sorted_pos)-1): 
 	if abs(sorted_pos[i] - sorted_pos[i+1]) < key_length:
