@@ -7,7 +7,7 @@ file_sets = ['practice_W_3_chr_1','practice_E_1_chr_1','hw2undergrad_E_2_chr_1']
 
 filename = file_sets[2]
 
-key_length = 50
+key_length = 20
 
 genome = read_genome('ref_' + filename + '.txt')
 genome_index = index_genome(genome, key_length, 0)

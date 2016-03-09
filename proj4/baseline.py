@@ -5,7 +5,7 @@ import zipfile
 
 file_sets = ['practice_W_3_chr_1','practice_E_1_chr_1','hw2undergrad_E_2_chr_1']
 
-filename = file_sets[0]
+filename = file_sets[2]
 
 genome = read_genome('ref_' + filename + '.txt')
 
