@@ -40,7 +40,20 @@ def deserialize(file = 'genome_index.txt'):
 	ser = f.read().strip()
 	return cPickle.loads(ser)
 
+def parse_consensus(filename):
+	'''Parse conensensus from .txt file'''
+	conensus = ''
+	f = open(filename, 'r')
+	for line in f:
+		conensus = conensus + line.strip()
+	return conensus
+
 if __name__=='__main__':
+
+	print len(parse_consensus('consensus_practice_W_3_chr_1.txt'))
+
+	print len(parse_consensus('consensus_practice_E_1_chr_1.txt'))
+
 	start1 = clock()
 	genome = read_genome('ref_hw1_W_2_chr_1.txt')
 	end1 = clock()
