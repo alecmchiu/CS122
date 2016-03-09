@@ -40,13 +40,12 @@ def HammingDistance(read1,read2):
 			count += 1
 	return count
 
-"""
-r = generate_single_reads()
-for item in r:
-	print item
-	kmers = kmer_read(item)
-	for fragment in kmers:
-		print "\t{}".format(fragment)
-"""
 
-#print HammingDistance('ATT','ATT')
+if __name__=='__main__':
+	r = generate_single_reads()
+	for item in r:
+		print item
+		kmers = kmer_read(item)
+		for fragment in kmers:
+			print "\t{}".format(fragment)
+	#print HammingDistance('ATT','ATT')

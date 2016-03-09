@@ -40,29 +40,28 @@ def deserialize(file = 'genome_index.txt'):
 	ser = f.read().strip()
 	return cPickle.loads(ser)
 
-"""
-start1 = clock()
-genome = read_genome('ref_hw1_W_2_chr_1.txt')
-end1 = clock()
-print "Genome reading: {} ms".format(end1-start1)
+if __name__=='__main__':
+	start1 = clock()
+	genome = read_genome('ref_hw1_W_2_chr_1.txt')
+	end1 = clock()
+	print "Genome reading: {} ms".format(end1-start1)
 
-start2 = clock()
-ind = index_genome(genome)
-end2 = clock()
-print "Indexing: {} ms".format(end2-start1)
+	start2 = clock()
+	ind = index_genome(genome)
+	end2 = clock()
+	print "Indexing: {} ms".format(end2-start1)
 
-start3 = clock()
-serialize(ind)
-end3 = clock()
-print "Serializing: {} ms".format(end3-start3)
+	start3 = clock()
+	serialize(ind)
+	end3 = clock()
+	print "Serializing: {} ms".format(end3-start3)
 
-start4 = clock()
-genome2 = deserialize()
-end4 = clock()
-print "Deserialzing: {} ms".format(end4-start4)
+	start4 = clock()
+	genome2 = deserialize()
+	end4 = clock()
+	print "Deserialzing: {} ms".format(end4-start4)
 
-f = open('index.txt','w')
-for key in genome2.keys():
-	f.write("{} : {} \n".format(key,genome2[key]))
-f.close()
-"""
+	f = open('index.txt','w')
+	for key in genome2.keys():
+		f.write("{} : {} \n".format(key,genome2[key]))
+	f.close()
