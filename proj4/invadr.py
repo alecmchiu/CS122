@@ -18,7 +18,25 @@ genome_index = index_genome(genome, key_length, 0)
 consensus = parse_consensus('consensus_' + filename + '.txt')
 consensus_rev = consensus[::-1]
 
-STR_regex = r'(\w\w\w+)\1{2,7}'
+genome_STR_regex = r'(\w\w\w{1,3})\1{3,23}'
+
+STR_list = []
+
+candidate_str = re.finditer(genome_STR_regex,genome)
+for each in candidate_str:
+	print each.start()
+	STR_list.append(str(each.group(0)) + ',' + str(each.start()))
+
+# STR_list2 = []
+# print
+
+# candidate_str = re.finditer(genome_STR_regex,consensus)
+# for each in candidate_str:
+# 	print each.start()
+# 	STR_list2.append(str(each.group(0)) + ',' + str(each.start()))
+
+
+STR_regex = r'(\w\w\w{1,3})\1{2,7}'
 
 candidates = set()
 
@@ -31,6 +49,7 @@ for i in range(len(consensus_rev)-key_length):
 pos = []
 
 for each in candidates:
+	# print each, genome_index[each]
 	pos.append(genome_index[each][0])
 
 pos.sort()
@@ -54,11 +73,11 @@ while i < len(pos):
 		end = start + key_length
 		i += 1
 
-for each in inv:
-	print each
+# for each in inv:
+# 	print each
 
 if filename != file_sets[2]:
-	generate_file(header='>'+filename,INV=inv)
+	generate_file(header='>'+filename,INV=inv,STR=STR_list)
 else:
 	f = open('good_answer.txt','r')
 	answer = open('answer.txt','w')
@@ -67,6 +86,9 @@ else:
 	answer.write('>INV\n')
 	for item in inv:
 		answer.write("{}\n".format(item))
+	answer.write('>STR\n')
+	for each in STR_list:
+		answer.write("{}\n".format(each))
 	f.close()
 	answer.close()
 
