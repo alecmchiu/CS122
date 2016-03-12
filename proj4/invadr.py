@@ -18,7 +18,7 @@ genome_index = index_genome(genome, key_length, 0)
 consensus = parse_consensus('consensus_' + filename + '.txt')
 consensus_rev = consensus[::-1]
 
-genome_STR_regex = r'(\w\w\w{1,3})\1{3,23}'
+genome_STR_regex = r'(\w{3,5})\1{3,23}'
 
 STR_list = []
 
@@ -34,7 +34,7 @@ for each in candidate_str:
 # for each in temp_dict.keys():
 # 	STR_list.append(temp_dict[each] + ',' + str(each))
 
-STR_regex = r'(\w\w\w{1,3})\1{2,7}'
+STR_regex = r'(\w{3,5})\1{2,7}'
 
 candidates = set()
 
@@ -47,7 +47,6 @@ for i in range(len(consensus_rev)-key_length):
 pos = []
 
 for each in candidates:
-	# print each, genome_index[each]
 	pos.append(genome_index[each][0])
 
 pos.sort()
@@ -70,9 +69,6 @@ while i < len(pos):
 		start = pos[i+1]
 		end = start + key_length
 		i += 1
-
-# for each in inv:
-# 	print each
 
 if filename != file_sets[2]:
 	generate_file(header='>'+filename,INV=inv,STR=STR_list)
