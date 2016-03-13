@@ -51,7 +51,6 @@ for each in candidates:
 
 pos.sort()
 
-final_pos = []
 inv = []
 
 i = 0
