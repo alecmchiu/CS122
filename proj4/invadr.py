@@ -18,13 +18,14 @@ genome_index = index_genome(genome, key_length, 0)
 consensus = parse_consensus('consensus_' + filename + '.txt')
 consensus_rev = consensus[::-1]
 
-genome_STR_regex = r'(\w{3,5})\1{3,23}'
+genome_STR_regex = r'(\w{3,5})\1{3,}'
 
 STR_list = []
 
 candidate_str = re.finditer(genome_STR_regex,genome)
 for each in candidate_str:
 	STR_list.append(str(each.group(0)) + ',' + str(each.start()))
+	print each.group(1), '(' + str(each.start()) + ')' ,':',each.group(0)
 
 # candidate_str = re.finditer(genome_STR_regex,consensus)
 # for each in candidate_str:
