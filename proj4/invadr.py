@@ -25,15 +25,6 @@ STR_list = []
 candidate_str = re.finditer(genome_STR_regex,genome)
 for each in candidate_str:
 	STR_list.append(str(each.group(0)) + ',' + str(each.start()))
-	print each.group(1), '(' + str(each.start()) + ')' ,':',each.group(0)
-
-# candidate_str = re.finditer(genome_STR_regex,consensus)
-# for each in candidate_str:
-# 	if int(each.start()) in temp_dict:
-# 		temp_dict[int(each.start())] = str(each.group(0))
-
-# for each in temp_dict.keys():
-# 	STR_list.append(temp_dict[each] + ',' + str(each))
 
 STR_regex = r'(\w{3,5})\1{2,7}'
 
