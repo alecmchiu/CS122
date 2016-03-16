@@ -2,6 +2,9 @@ from preproc import *
 from reads import *
 from output import *
 import zipfile
+from time import clock
+
+start = clock()
 
 file_sets = ['practice_W_3_chr_1','practice_E_1_chr_1','hw2undergrad_E_2_chr_1']
 
@@ -64,3 +67,7 @@ title = 'baseline_key' + str(key_length) + '_' + filename + '.zip'
 
 with zipfile.ZipFile(title,'w') as myzip:
 	myzip.write('answer.txt')
+
+end = clock()
+
+print "{0:.3f}".format(end-start)

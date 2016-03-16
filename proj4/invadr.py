@@ -3,12 +3,28 @@ from output import generate_file
 import zipfile
 import re
 from time import clock
+import sys
 
 script_start = clock()
 
-file_sets = ['practice_W_3_chr_1','practice_E_1_chr_1','hw2undergrad_E_2_chr_1']
+file_sets = ['practice_W_3_chr_1','practice_E_1_chr_1','hw2undergrad_E_2_chr_1','hw2grad_M_1_chr_1']
 
 filename = file_sets[2]
+
+if (filename == file_sets[3]):
+	genome = read_genome('ref_' + filename + '.txt')
+	answer = open('answer.txt','w')
+	answer.write('>'+filename+'\n')
+	answer.write('>STR\n')
+	genome_STR_regex = r'(\w{3,5})\1{3,}'
+	candidate_str = re.finditer(genome_STR_regex,genome)
+	for each in candidate_str:
+		answer.write(str(each.group(0)) + ',' + str(each.start()) + '\n')
+	answer.close()
+	title = 'invadr_STR' + '_' + filename + '.zip'
+	with zipfile.ZipFile(title,'w') as myzip:
+		myzip.write('answer.txt')
+	sys.exit()
 
 key_length = 20
 
@@ -16,6 +32,7 @@ genome = read_genome('ref_' + filename + '.txt')
 genome_index = index_genome(genome, key_length, 0)
 
 consensus = parse_consensus('consensus_' + filename + '.txt')
+#consensus = parse_consensus('donor_' + filename + '.txt')
 consensus_rev = consensus[::-1]
 
 genome_STR_regex = r'(\w{3,5})\1{3,}'
@@ -26,7 +43,7 @@ candidate_str = re.finditer(genome_STR_regex,genome)
 for each in candidate_str:
 	STR_list.append(str(each.group(0)) + ',' + str(each.start()))
 
-STR_regex = r'(\w{3,5})\1{2,7}'
+STR_regex = r'(\w{3,5})\1{2,}'
 
 candidates = set()
 
@@ -52,7 +69,7 @@ while i < len(pos):
 	if i == len(pos) - 1:
 		inv.append(genome[pos[i]:pos[i]+key_length] + ',' + str(pos[i]))
 		break
-	if (pos[i+1] - pos[i] < key_length):
+	if (pos[i+1] - pos[i] <= key_length):
 		end = pos[i+1] + key_length
 		i += 1
 	elif pos[i+1] - pos[i] > key_length:
